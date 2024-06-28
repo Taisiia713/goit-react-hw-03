@@ -1,0 +1,30 @@
+.label {
+    display: flex;
+    margin-bottom: 5px;
+    margin-left: 16px;
+}
+
+.input {
+    display: flex;
+    margin-bottom: 10px;
+    margin-right: auto;
+    margin-left: auto;
+}
+
+.input:active {
+    border-color: blue;
+
+}
+
+.form {
+    border: 2px solid #000;
+    width: 200px;
+    height: 150px;
+    padding: 15px;
+}
+
+.btn {
+    display: flex;
+    margin-right: auto;
+    margin-left: auto;
+}

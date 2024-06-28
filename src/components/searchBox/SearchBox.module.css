@@ -1,0 +1,10 @@
+.label {
+    display: flex;
+    margin-bottom: 5px;
+    margin-top: 20px;
+}
+
+.input {
+    display: flex;
+
+}
