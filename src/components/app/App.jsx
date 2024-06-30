@@ -1,7 +1,7 @@
 import { useState } from "react";
-import ContactForm from "../contactForm/ContactForm";
 import ContactList from "../contactList/ContactList";
 import SearchBox from "../searchBox/SearchBox";
+import ContactForm from "../contactForm/ContactForm";
 
 export default function App() {
   const [users, setUsers] = useState([
@@ -11,30 +11,29 @@ export default function App() {
     { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
   ]);
 
-  const [filter, setFilter] = useState("");
+  const [inputValue, setInputValue] = useState("");
 
+  // новий контакт
   const addUser = (newUser) => {
     setUsers([...users, newUser]);
   };
 
+  // видалення контакту
   const deleteUser = (userId) => {
     setUsers(users.filter((user) => user.id !== userId));
   };
 
-  const handleFilterChange = (newFilter) => {
-    setFilter(newFilter);
-  };
-
-  const filteredUsers = users.filter((user) =>
-    user.name.toLowerCase().includes(filter.toLocaleLowerCase())
-  );
+  // Фільтрація контактів за ім'ям
+  // const filteredContacts = users.filter((user) =>
+  //   user.name.toLowerCase().includes(inputValue.toLowerCase())
+  // );
 
   return (
     <div>
       <h1>Phonebook</h1>
       <ContactForm addUser={addUser} />
-      <SearchBox filter={filter} onFilterChange={handleFilterChange} />
-      <ContactList users={filteredUsers} deleteUser={deleteUser} />
+      <SearchBox value={inputValue} onType={setInputValue} />
+      <ContactList users={users} deleteUser={deleteUser} />
     </div>
   );
 }

@@ -28,3 +28,8 @@
     margin-right: auto;
     margin-left: auto;
 }
+
+.error {
+    color: rgb(239, 124, 2);
+    font-size: 14px;
+}
