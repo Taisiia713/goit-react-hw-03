@@ -1,15 +1,16 @@
 import Contact from "../contact/Contact";
-
-export default function ContactList({ users, delteUser }) {
+import styles from "./ContactList.module.css";
+export default function ContactList({ contacts, onDeleteContact }) {
   return (
-    <>
-      <ul>
-        {users.map((user) => (
-          <li key={user.id}>
-            <Contact user={user} delteUser={delteUser} />
-          </li>
-        ))}
-      </ul>
-    </>
+    <ul className={styles.list}>
+      {contacts.map((contact) => (
+        <li key={contact.id} className={styles.listItem}>
+          <Contact
+            onDelete={() => onDeleteContact(contact.id)}
+            contact={contact}
+          />
+        </li>
+      ))}
+    </ul>
   );
 }

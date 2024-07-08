@@ -1,11 +1,14 @@
-export default function Contact({ user, deleteUser }) {
+import styles from "./Contact.module.css";
+
+export default function Contact({ onDelete, contact }) {
   return (
-    <ul>
-      <li>
-        <p>{user.name}</p>
-        <p>{user.number}</p>
-        <button onClick={deleteUser}>Delete</button>
-      </li>
-    </ul>
+    <div>
+      <p>
+        {contact.name}: {contact.number}
+      </p>
+      <button className={styles.deleteButton} onClick={onDelete}>
+        Delete
+      </button>
+    </div>
   );
 }

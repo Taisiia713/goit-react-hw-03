@@ -1,39 +1,47 @@
-import { useState } from "react";
-import ContactList from "../contactList/ContactList";
-import SearchBox from "../searchBox/SearchBox";
 import ContactForm from "../contactForm/ContactForm";
+import SearchBox from "../searchBox/SearchBox";
+import ContactList from "../contactList/ContactList";
+import { useState, useEffect } from "react";
+import styles from "./App.module.css";
 
 export default function App() {
-  const [users, setUsers] = useState([
-    { id: "id-1", name: "Rosie Simpson", number: "459-12-56" },
-    { id: "id-2", name: "Hermione Kline", number: "443-89-12" },
-    { id: "id-3", name: "Eden Clements", number: "645-17-79" },
-    { id: "id-4", name: "Annie Copeland", number: "227-91-26" },
-  ]);
+  const [contacts, setContacts] = useState(() => {
+    const storedContacts = localStorage.getItem("contacts");
+    return storedContacts ? JSON.parse(storedContacts) : [];
+  });
+  const [filter, setFilter] = useState("");
 
-  const [inputValue, setInputValue] = useState("");
+  useEffect(() => {
+    localStorage.setItem("contacts", JSON.stringify(contacts));
+  }, [contacts]);
 
-  // новий контакт
-  const addUser = (newUser) => {
-    setUsers([...users, newUser]);
+  const addContact = (newContact) => {
+    setContacts((prevContacts) => [...prevContacts, newContact]);
   };
 
-  // видалення контакту
-  const deleteUser = (userId) => {
-    setUsers(users.filter((user) => user.id !== userId));
+  const deleteContact = (contactId) => {
+    setContacts((prevContacts) =>
+      prevContacts.filter((contact) => contact.id !== contactId)
+    );
   };
 
-  // Фільтрація контактів за ім'ям
-  // const filteredContacts = users.filter((user) =>
-  //   user.name.toLowerCase().includes(inputValue.toLowerCase())
-  // );
+  const handleFilterChange = (newFilter) => {
+    setFilter(newFilter);
+  };
+
+  const filteredContacts = contacts.filter((contact) =>
+    contact.name.toLowerCase().includes(filter.toLowerCase())
+  );
 
   return (
-    <div>
-      <h1>Phonebook</h1>
-      <ContactForm addUser={addUser} />
-      <SearchBox value={inputValue} onType={setInputValue} />
-      <ContactList users={users} deleteUser={deleteUser} />
+    <div className={styles.container}>
+      <h1 className={styles.header}>Phonebook</h1>
+      <ContactForm addContact={addContact} />
+      <SearchBox filter={filter} onFilterChange={handleFilterChange} />
+      <ContactList
+        contacts={filteredContacts}
+        onDeleteContact={deleteContact}
+      />
     </div>
   );
 }
